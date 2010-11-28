@@ -1,4 +1,3 @@
-
 function TomboyMarkdown () {
     this._init ();
 }
@@ -9,23 +8,26 @@ TomboyMarkdown.prototype = {
                     bold : { open: '**', close: '**' },
                     italic : { open: '*', close: '*' },
                     strikethrough : { open: '-', close: '-' },
-                    highlight : 'highlight',
-                    monospace : 'monospace',
+                    highlight : { open: '***', close: '***' },
+                    monospace : { open: '`', close: '`' },
 
-                    small : 'size:small',
-                    large : 'size:large',
-                    huge : 'size:huge',
+                    'size:small' : { open: '### ', close: ' ###' },
+                    'size:large' : { open: '## ', close: ' ##' },
+                    'size:huge' : { open: '# ', close: ' #' },
 
-                    links : ['link:url', 'link:internal'],
-
-                    list : 'list',
-                    listItem : 'list-item'
+                    'list-item' : { open : '* ', close : '' }
                 }; 
             },
 
     startElement : function (name, attributes) {
                        if (name in this.TomboyElements) {
                            this._outputStream += this.TomboyElements[name].open;
+                       }
+                   },
+
+    endElement : function (name) {
+                       if (name in this.TomboyElements) {
+                           this._outputStream += this.TomboyElements[name].close;
                        }
                    },
 
